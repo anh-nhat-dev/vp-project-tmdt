@@ -1,16 +1,16 @@
 module.exports.index = function(req, res) {
-    res.send('List')
+    res.render("admin/product")
 }
 module.exports.show = function(req, res) {
     res.send('Show')
 }
 
 module.exports.edit = function(req, res) {
-    res.send('Edit')
+    res.render("admin/edit_product")
 }
 
 module.exports.create = function(req, res) {
-    res.send('Create')
+    res.render("admin/add_product")
 }
 
 module.exports.delete = function(req, res) {
