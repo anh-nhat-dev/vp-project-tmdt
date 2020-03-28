@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const router = Router();
-const { AdminController, ProductController } = require('../apps/controllers/admin')
+const { AdminController, ProductController } = require('../apps/controllers/admin');
+const { HomeController } = require('../apps/controllers/site')
 const { auth } = require('../apps/middlewares');
 
 
@@ -29,5 +30,13 @@ router.group("/admin", (adminRouter) => {
 })
 
 
+router.group('/', (homeRouter) => {
+    homeRouter.get('/', HomeController.index);
+    homeRouter.get("/category", HomeController.category)
+    homeRouter.get("/product", HomeController.product)
+    homeRouter.get("/search", HomeController.search)
+    homeRouter.get("/cart", HomeController.cart)
+    homeRouter.get("/success", HomeController.success)
+})
 
 module.exports = router;

@@ -1,0 +1,37 @@
+<%- include("layout/header")%>
+
+
+<!--	Feature Product	-->
+<div class="products">
+    <h3>Sản phẩm nổi bật</h3>
+
+        <div class="product-list card-deck">
+            <% featuredProducts && featuredProducts.length && featuredProducts.forEach((product, index) => { %>
+                <div class="product-item card text-center">
+                    <a href="#"><img src="/static/images/products/<%=product.prd_image%>"/></a>
+                    <h4><a href="#"><%=product.prd_name%></a></h4>
+                    <p>Giá Bán: <span><%=product.prd_price%>đ</span></p>
+                </div>
+                <% }) %>
+        </div>
+</div>
+<!--	End Feature Product	-->
+
+
+<!--	Latest Product	-->
+<div class="products">
+    <h3>Sản phẩm mới</h3>
+    <div class="product-list card-deck">
+        <% latestProducts && latestProducts.length && latestProducts.forEach((product, index) => { %>
+            <div class="product-item card text-center">
+                <a href="#"><img src="/static/images/products/<%=product.prd_image%>"/></a>
+                <h4><a href="#"><%=product.prd_name%></a></h4>
+                <p>Giá Bán: <span><%=product.prd_price%>đ</span></p>
+            </div>
+            <% }) %>
+    </div>
+</div>
+<!--	End Latest Product	-->
+
+</div>
+<%- include ("layout/footer")%>
