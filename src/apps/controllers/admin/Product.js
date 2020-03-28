@@ -1,9 +1,11 @@
-const ProductModel = require('../../models/product.model');
+const mongoose = require('mongoose');
+
+const ProductModel = mongoose.model('Product');
 
 module.exports.index = async function(req, res) {
     const products = await ProductModel.find().populate('categories');
     console.log("LOGS: products", products);
-    res.render("admin/product")
+    res.render("admin/product", { products })
 }
 module.exports.show = function(req, res) {
     res.send('Show')

@@ -38,30 +38,23 @@
 						    </tr>
                             </thead>
                             <tbody>
-                                    <tr>
-                                        <td style="">1</td>
-                                        <td style="">Sản phẩm số 1</td>
-                                        <td style="">18.500.000 vnd</td>
-                                        <td style="text-align: center"><img width="130" height="180" src="img/download.jpeg" /></td>
-                                        <td><span class="label label-success">Còn hàng</span></td>
-                                        <td>Danh mục số 1</td>
-                                        <td class="form-group">
-                                            <a href="product-edit.html" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i></a>
-                                            <a href="product-edit.html" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                            <td style="">1</td>
-                                            <td style="">Sản phẩm số 2</td>
-                                            <td style="">18.500.000 vnd</td>
-                                            <td style="text-align: center"><img width="130" height="180" src="img/download.jpeg" /></td>
-                                            <td><span class="label label-danger">Hết hàng</span></td>
-                                            <td>Danh mục số 1</td>
+                                    <% products && products.length && products.forEach((product) => {%>    
+                                        <tr>
+                                            <td style=""><%= product.id %></td>
+                                            <td style=""><%=product.prd_name%></td>
+                                            <td style=""><%=product.prd_price%> vnd</td>
+                                            <td style="text-align: center"><img width="130" height="180" src="/static/images/products/<%=product.prd_image%>" />
+                                            </td>
+                                            <td><span class="label label-<%if(product.prd_status==1){%>success<%}else{%>danger<%}%>"><%if(product.prd_status==1){%>Còn hàng<%}else{%>Hết hàng<%}%></span></td>
+                                            <td><%=product.categories.cat_name%></td>
                                             <td class="form-group">
-                                                <a href="product-edit.html" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i></a>
-                                                <a href="product-edit.html" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+                                                <a href="product-edit.html" class="btn btn-primary"><i
+                                                        class="glyphicon glyphicon-pencil"></i></a>
+                                                <a href="product-edit.html" class="btn btn-danger"><i
+                                                        class="glyphicon glyphicon-remove"></i></a>
                                             </td>
                                         </tr>
+                                 <% })%>  
                                  </tbody>
 						</table>
                     </div>

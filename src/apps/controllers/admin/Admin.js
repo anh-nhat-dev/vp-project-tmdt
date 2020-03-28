@@ -1,4 +1,6 @@
-const UserModel = require('../../models/user.model')
+const mongoose = require('mongoose');
+
+const UserModel = mongoose.model('User');
 
 module.exports.getLogin = function(req, res) {
     res.render("admin/login", { data: {} });

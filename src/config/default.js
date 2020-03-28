@@ -14,7 +14,8 @@ module.exports = {
             option: {
                 useNewUrlParser: true,
                 useUnifiedTopology: true
-            }
+            },
+            model_path: join(__dirname, '..', 'apps', 'models')
         }
     }
 

@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-require('./category.model')
 
 const ProductSchema = new mongoose.Schema({
     cat_id: mongoose.Types.ObjectId,
