@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const ProductModel = mongoose.model('Product');
 const CategoryModel = mongoose.model('Category');
+const CommentModel = mongoose.model('Comment')
 
 module.exports.index = async function(req, res) {
 
@@ -54,12 +55,34 @@ module.exports.category = async function(req, res) {
 
 module.exports.product = async function(req, res) {
     const prdId = req.params.prd_id
-    const product = await ProductModel.findById(prdId)
+    const product = await ProductModel.findById(prdId).populate({
+        path: 'comments',
+        options: {
+            limit: 2
+        }
+    })
     res.render('site/product', { product });
 }
 
-module.exports.search = function(req, res) {
-    res.render('site/search');
+module.exports.comment = async function(req, res) {
+    const comment = new CommentModel({
+        prd_id: req.params.prd_id,
+        comm_name: req.body.comm_name,
+        comm_mail: req.body.comm_mail,
+        comm_details: req.body.comm_details
+    })
+    await comment.save()
+    res.redirect("/product/" + req.params.prd_id)
+}
+
+module.exports.search = async function(req, res) {
+    const keyWord = req.body.keyword
+    const newKeyword = ".*" + keyWord.replace(" ", ".*") + ".*"
+
+    let products = await ProductModel.find({ prd_name: { $regex: newKeyword, $options: 'i' } });
+
+    res.render("site/search", { products: products, keyWord: keyWord })
+
 }
 module.exports.cart = function(req, res) {
     res.render('site/cart');

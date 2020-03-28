@@ -21,5 +21,11 @@ ProductSchema.virtual("category", {
     justOne: true
 })
 
+ProductSchema.virtual("comments", {
+    ref: "Comment",
+    localField: "_id",
+    foreignField: "prd_id",
+})
+
 
 module.exports = mongoose.model("Product", ProductSchema, 'Product');

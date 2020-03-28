@@ -34,7 +34,8 @@ router.group('/', (homeRouter) => {
     homeRouter.get('/', HomeController.index);
     homeRouter.get("/category/:cat_name-:cat_id", HomeController.category)
     homeRouter.get("/product/:prd_id", HomeController.product)
-    homeRouter.get("/search", HomeController.search)
+    homeRouter.post("/product/:prd_id/comment", HomeController.comment)
+    homeRouter.post("/search", HomeController.search)
     homeRouter.get("/cart", HomeController.cart)
     homeRouter.get("/success", HomeController.success)
 })
