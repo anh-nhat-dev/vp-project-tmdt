@@ -48,9 +48,9 @@
                                             <td><span class="label label-<%if(product.prd_status==1){%>success<%}else{%>danger<%}%>"><%if(product.prd_status==1){%>Còn hàng<%}else{%>Hết hàng<%}%></span></td>
                                             <td><%=product.category.cat_name%></td>
                                             <td class="form-group">
-                                                <a href="product-edit.html" class="btn btn-primary"><i
+                                                <a href="/admin/products/edit/<%=product.id%>" class="btn btn-primary"><i
                                                         class="glyphicon glyphicon-pencil"></i></a>
-                                                <a href="product-edit.html" class="btn btn-danger"><i
+                                                <a href="/admin/products/delete/<%=product.id%>" class="btn btn-danger"><i
                                                         class="glyphicon glyphicon-remove"></i></a>
                                             </td>
                                         </tr>

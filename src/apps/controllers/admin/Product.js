@@ -41,8 +41,43 @@ module.exports.show = function(req, res) {
     res.send('Show')
 }
 
-module.exports.edit = function(req, res) {
-    res.render("admin/edit_product")
+module.exports.edit = async function(req, res) {
+    //  GET Categories
+    const categories = await CategoryModel.find()
+
+    //  GET Product
+    const prd_id = req.params.prd_id
+    const product = await ProductModel.findById(prd_id)
+
+
+    res.render("admin/edit_product", { categories, product });
+}
+
+
+module.exports.update = async function(req, res) {
+    var prd_id = req.params.prd_id
+    var form = new formidable.IncomingForm({
+        uploadDir: path.join(config.get('app.root_path'), 'tmp')
+    })
+    form.parse(req, (err, fields, files) => {
+
+        //   Upload File
+        if (files.prd_image.name) {
+            var oldPath = files.prd_image.path
+            var newPath = files.prd_image.name
+            newPath = path.join(config.get('app.static_folder'), 'images', 'products', newPath)
+            fs.rename(oldPath, newPath, (err) => {
+                if (err) throw err
+            })
+            fields.prd_image = files.prd_image.name
+        }
+
+        delete fields.sbm
+            //  Edit product
+        ProductModel.updateOne({ _id: prd_id }, fields).exec((err, docs) => {
+            res.redirect("/admin/products")
+        })
+    })
 }
 
 
@@ -78,5 +113,8 @@ module.exports.store = function(req, res) {
 }
 
 module.exports.delete = function(req, res) {
-    res.send('Delete')
+    const prd_id = req.params.prd_id
+    ProductModel.deleteOne({ _id: prd_id }, (err, docs) => {
+        res.redirect("/admin/products")
+    })
 }

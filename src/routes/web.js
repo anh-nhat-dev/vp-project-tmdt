@@ -12,8 +12,10 @@ router.get('/admin/products', ProductController.index);
 router.route('/admin/products/create')
     .get(ProductController.create)
     .post(ProductController.store);
-router.get('/admin/products/edit', ProductController.edit);
+router.route('/admin/products/edit/:prd_id')
+    .get(ProductController.edit)
+    .post(ProductController.update);
 router.get('/admin/products/show', ProductController.show);
-router.get('/admin/products/delete', ProductController.delete);
+router.get('/admin/products/delete/:prd_id', ProductController.delete);
 
 module.exports = router;
