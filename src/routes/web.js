@@ -32,8 +32,8 @@ router.group("/admin", (adminRouter) => {
 
 router.group('/', (homeRouter) => {
     homeRouter.get('/', HomeController.index);
-    homeRouter.get("/category", HomeController.category)
-    homeRouter.get("/product", HomeController.product)
+    homeRouter.get("/category/:cat_name-:cat_id", HomeController.category)
+    homeRouter.get("/product/:prd_id", HomeController.product)
     homeRouter.get("/search", HomeController.search)
     homeRouter.get("/cart", HomeController.cart)
     homeRouter.get("/success", HomeController.success)
