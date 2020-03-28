@@ -14,7 +14,7 @@ const ProductSchema = new mongoose.Schema({
     prd_details: String
 }, { toJSON: { virtuals: true }, toObject: { virtuals: true } });
 
-ProductSchema.virtual("categories", {
+ProductSchema.virtual("category", {
     ref: "Category",
     localField: "cat_id",
     foreignField: "_id",

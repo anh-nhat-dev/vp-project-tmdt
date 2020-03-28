@@ -9,7 +9,9 @@ router.route('/admin/login')
 router.get('/admin/logout', AdminController.getLogout);
 
 router.get('/admin/products', ProductController.index);
-router.get('/admin/products/create', ProductController.create);
+router.route('/admin/products/create')
+    .get(ProductController.create)
+    .post(ProductController.store);
 router.get('/admin/products/edit', ProductController.edit);
 router.get('/admin/products/show', ProductController.show);
 router.get('/admin/products/delete', ProductController.delete);

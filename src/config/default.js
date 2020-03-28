@@ -2,7 +2,8 @@ const { join } = require('path');
 module.exports = {
     app: {
         port: process.env.PORT || 3000,
-        static_folder: join(__dirname, '..', 'public')
+        static_folder: join(__dirname, '..', 'public'),
+        root_path: join(__dirname, '..', '..')
     },
     views: {
         engine: "ejs",
