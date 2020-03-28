@@ -1,4 +1,8 @@
-module.exports.index = function(req, res) {
+const ProductModel = require('../../models/product.model');
+
+module.exports.index = async function(req, res) {
+    const products = await ProductModel.find().populate('categories');
+    console.log("LOGS: products", products);
     res.render("admin/product")
 }
 module.exports.show = function(req, res) {

@@ -3,7 +3,9 @@ const router = Router();
 const { AdminController, ProductController } = require('../apps/controllers/admin')
 
 router.get('/admin/dashboard', AdminController.getDashboard);
-router.get('/admin/login', AdminController.getLogin);
+router.route('/admin/login')
+    .get(AdminController.getLogin)
+    .post(AdminController.postLogin);
 router.get('/admin/logout', AdminController.getLogout);
 
 router.get('/admin/products', ProductController.index);

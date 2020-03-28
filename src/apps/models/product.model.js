@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+require('./category.model')
 
 const ProductSchema = new mongoose.Schema({
     cat_id: mongoose.Types.ObjectId,
@@ -12,6 +13,14 @@ const ProductSchema = new mongoose.Schema({
     prd_status: Boolean,
     prd_featured: Number,
     prd_details: String
-});
+}, { toJSON: { virtuals: true }, toObject: { virtuals: true } });
 
-module.exports = mongoose.model("Product", ProductSchema);
+ProductSchema.virtual("categories", {
+    ref: "Category",
+    localField: "cat_id",
+    foreignField: "_id",
+    justOne: true
+})
+
+
+module.exports = mongoose.model("Product", ProductSchema, 'Product');
