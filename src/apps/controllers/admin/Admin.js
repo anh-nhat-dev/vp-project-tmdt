@@ -12,6 +12,7 @@ module.exports.postLogin = function(req, res) {
 
     UserModel.findOne({ user_mail: mail, user_pass: pass }).then(doc => {
         if (doc) {
+            req.session.mail = req.body.mail
             return res.redirect("/admin/dashboard")
         }
         const error = "Tài khoản không hợp lệ !";
@@ -24,7 +25,8 @@ module.exports.postLogin = function(req, res) {
 }
 
 module.exports.getLogout = function(req, res) {
-    res.send('Logout')
+    req.session.destroy()
+    res.redirect("/login")
 }
 
 module.exports.getDashboard = function(req, res) {
