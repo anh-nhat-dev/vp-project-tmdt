@@ -87,6 +87,29 @@ module.exports.search = async function(req, res) {
 module.exports.cart = function(req, res) {
     res.render('site/cart');
 }
+
+module.exports.addToCart = function(req, res) {
+    const body = req.body;
+    const cart = req.session.cart;
+    body.quantity = parseInt(body.quantity);
+    if (!cart) {
+        req.session.cart = [{ prd_id: body.prd_id, quantity: body.quantity }]
+    }
+
+    if (cart) {
+        const isProductExists = cart.find(product => product.prd_id === body.prd_id);
+        req.session.cart = isProductExists ?
+            cart.map(product => product.prd_id === body.prd_id && (product.quantity += body.quantity) && product) :
+            cart.push({ prd_id: body.prd_id, quantity: body.quantity }) && cart;
+
+        // req.session.cart = isProductExists ?
+        //     cart.map(product => product.prd_id === body.prd_id && (product.quantity += body.quantity) && product) : [...cart, { prd_id: body.prd_id, quantity: body.quantity }];
+
+    }
+
+    return res.redirect(`/product/${body.prd_id}`)
+}
+
 module.exports.success = function(req, res) {
     res.render('site/success');
 }

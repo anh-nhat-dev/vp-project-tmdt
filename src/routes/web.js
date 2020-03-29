@@ -36,7 +36,10 @@ router.group('/', (homeRouter) => {
     homeRouter.get("/product/:prd_id", HomeController.product)
     homeRouter.post("/product/:prd_id/comment", HomeController.comment)
     homeRouter.post("/search", HomeController.search)
-    homeRouter.get("/cart", HomeController.cart)
+    homeRouter.group('/cart', (cartRouter) => {
+        cartRouter.get("/", HomeController.cart);
+        cartRouter.post('/add', HomeController.addToCart);
+    })
     homeRouter.get("/success", HomeController.success)
 })
 

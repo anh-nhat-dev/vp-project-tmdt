@@ -3,7 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const connectMongo = require('../libs/connect-mongo');
 const session = require("express-session");
-const { categoryProvider } = require('./middlewares')
+const { categoryProvider, cartProvider } = require('./middlewares')
 
 module.exports = function(app) {
     app.set("view engine", config.get("views.engine"));
@@ -15,7 +15,6 @@ module.exports = function(app) {
 
     connectMongo.connectMongoDb();
     app.use(categoryProvider);
-
     //  Config Express Session
     app.set('trust proxy', 1) // trust first proxy
     app.use(session({
@@ -24,4 +23,6 @@ module.exports = function(app) {
         saveUninitialized: true,
         cookie: { secure: false }
     }))
+
+    app.use(cartProvider)
 }
