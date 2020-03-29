@@ -8,7 +8,7 @@
         </div>
         <form method="post" action="/cart/update">
             <% let totalPrice = 0; %>
-            <% cart && cart.forEach((item) => { %>
+            <% cart && cart.forEach((item, index) => { %>
                 <% const product = products.find(product => product.id === item.prd_id) %>
                 <% if (product) { %>
                 <% const price = parseInt(product.prd_price * item.quantity); totalPrice+= price %>
@@ -19,16 +19,17 @@
                     </div>
 
                     <div class="cart-quantity col-lg-2 col-md-2 col-sm-12">
-                        <input type="number" id="quantity" class="form-control form-blue quantity" value="<%= item.quantity %>" min="1"  />
+                        <input type="hidden" name="cart[<%= index %>][prd_id]" value="<%= item.prd_id%>"  />
+                        <input type="number" id="quantity" name="cart[<%= index %>][quantity]"  class="form-control form-blue quantity" value="<%= item.quantity %>" min="0"  />
                     </div>
-                    <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b><%= price %>đ</b><a href="#">Xóa</a></div>
+                    <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b><%= price %>đ</b><a href="/cart/delete/<%= item.prd_id%>">Xóa</a></div>
                 </div>
                 <% } %>
             <%  })  %>
             
             <div class="row">
                 <div class="cart-thumb col-lg-7 col-md-7 col-sm-12">
-                    <button id="update-cart" class="btn btn-success" type="submit" name="sbm">Cập nhật giỏ hàng</button>
+                    <button id="update-cart" class="btn btn-success" type="submit">Cập nhật giỏ hàng</button>
                 </div>
                 <div class="cart-total col-lg-2 col-md-2 col-sm-12"><b>Tổng cộng:</b></div>
                 <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b><%= totalPrice %>đ</b></div>
@@ -40,7 +41,7 @@
 
     <!--	Customer Info	-->
     <div id="customer">
-        <form method="post">
+        <form method="post" action="/order">
             <div class="row">
 
                 <div id="customer-name" class="col-lg-4 col-md-4 col-sm-12">
@@ -59,21 +60,22 @@
                 </div>
 
             </div>
-        </form>
-        <div class="row">
+            <div class="row">
             <div class="by-now col-lg-6 col-md-6 col-sm-12">
-                <a href="#">
+                <button type="submit">
                     <b>Mua ngay</b>
                     <span>Giao hàng tận nơi siêu tốc</span>
-                </a>
+                </button>
             </div>
             <div class="by-now col-lg-6 col-md-6 col-sm-12">
-                <a href="#">
+                <button href="#">
                     <b>Trả góp Online</b>
                     <span>Vui lòng call (+84) 0988 550 553</span>
-                </a>
+                </button>
             </div>
         </div>
+        </form>
+        
     </div>
     <!--	End Customer Info	-->
 

@@ -38,9 +38,16 @@ router.group('/', (homeRouter) => {
     homeRouter.post("/search", HomeController.search)
     homeRouter.group('/cart', (cartRouter) => {
         cartRouter.get("/", HomeController.cart);
+        cartRouter.get('/delete/:prd_id', HomeController.deleteCart);
         cartRouter.post('/add', HomeController.addToCart);
+        cartRouter.post('/update', HomeController.updateCart);
     })
-    homeRouter.get("/success", HomeController.success)
+
+    homeRouter.group('/order', (orderRouter) => {
+        orderRouter.post("/", HomeController.order)
+        orderRouter.post("/success", HomeController.success)
+    })
+
 })
 
 module.exports = router;

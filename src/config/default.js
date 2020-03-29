@@ -18,6 +18,20 @@ module.exports = {
             },
             model_path: join(__dirname, '..', 'apps', 'models')
         }
+    },
+    mail: {
+        transporter: {
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true, // true for 465, false for other ports
+            auth: {
+                user: "anhnhatdev2504@gmail.com", // generated ethereal user
+                pass: "aooetapcleuuisun" // generated ethereal password
+            }
+        },
+        options: {
+            from: 'Vietpro vietpro@gmailcom'
+        }
     }
 
 }

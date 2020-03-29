@@ -1,4 +1,9 @@
 const mongoose = require('mongoose');
+const nodemailer = require('nodemailer')
+const config = require('config');
+const ejs = require('ejs');
+const { join } = require('path');
+const moment = require('moment')
 
 const ProductModel = mongoose.model('Product');
 const CategoryModel = mongoose.model('Category');
@@ -116,6 +121,55 @@ module.exports.addToCart = function(req, res) {
     return res.redirect(`/product/${body.prd_id}`)
 }
 
+module.exports.updateCart = function(req, res) {
+    const cart = req.body &&
+        req.body.cart &&
+        req.body.cart.map(item => (item.quantity = parseInt(item.quantity)) && item)
+    req.session.cart = cart.filter((item) => item.quantity);
+    return res.redirect('/cart')
+}
+
+module.exports.deleteCart = function(req, res) {
+    const prd_id = req.params.prd_id;
+    req.session.cart = req.session.cart.filter(item => item.prd_id !== prd_id);
+    return res.redirect('/cart')
+}
+
 module.exports.success = function(req, res) {
     res.render('site/success');
+}
+module.exports.order = async function(req, res) {
+
+
+    const body = req.body;
+    const cart = req.session.cart;
+
+    const transporter = nodemailer.createTransport(config.get("mail.transporter"))
+
+
+    const productIds = cart.map(product => product.prd_id)
+    const products = await ProductModel.find({ _id: { $in: productIds } });
+    const total = cart.reduce((accumulator, item) => {
+        const product = products.find(product => product.id === item.prd_id);
+        return accumulator + (product.prd_price * item.quantity)
+    }, 0)
+    const htmlEmail = await ejs.renderFile(join(config.get("views.path"), 'site', 'email.ejs'), {
+        cart,
+        total,
+        date: moment().format("MMM Do YY"),
+        products,
+        ...body,
+    });
+
+    await transporter.sendMail({
+        to: body.mail,
+        from: config.get("mail.options.from"),
+        subject: "Thông báo đơn hàng",
+        html: htmlEmail
+    })
+
+    req.session.cart = [];
+
+    res.redirect(307, '/order/success')
+
 }
