@@ -84,8 +84,14 @@ module.exports.search = async function(req, res) {
     res.render("site/search", { products: products, keyWord: keyWord })
 
 }
-module.exports.cart = function(req, res) {
-    res.render('site/cart');
+module.exports.cart = async function(req, res) {
+
+    const cart = req.session.cart;
+
+    if (!cart || !cart.length) return res.render('site/cart', { products: [] })
+    const productIds = cart.map(product => product.prd_id)
+    const products = await ProductModel.find({ _id: { $in: productIds } })
+    res.render('site/cart', { products });
 }
 
 module.exports.addToCart = function(req, res) {
