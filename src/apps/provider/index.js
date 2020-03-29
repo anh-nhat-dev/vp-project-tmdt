@@ -1,1 +1,0 @@
-module.exports.categoryProvider = require('./category.provider')

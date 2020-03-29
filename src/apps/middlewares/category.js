@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 
-module.exports = async function(app) {
+module.exports = async function(req, res, next) {
     const CategoryModel = mongoose.model('Category')
     const categories = await CategoryModel.find();
-    app.locals.categories = categories;
+    res.locals.categories = categories;
+    next()
 }
